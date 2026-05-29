@@ -16,6 +16,10 @@ PocketNode should be decomposed into living Harness artifacts instead of using
 input material. Future work should rely on smaller product docs, epics, story
 candidates, decision records, and validation matrix rows.
 
+This is an academic learning project. Every completed task must leave a
+learning record that explains the concrete skills practiced, what was learned,
+and how the lesson applies to future PocketNode work.
+
 The MVP direction is a browser-only web product:
 
 - Next.js/PWA web client as the only MVP client surface.
@@ -77,6 +81,14 @@ Create English living product docs under `docs/product/`:
 | `platforms.md` | MVP web/PWA surface, post-MVP mobile and desktop surfaces, browser constraints. | Container diagram, platform notes |
 | `telemetry-commercial.md` | Anonymous telemetry, crash reporting, Pro/lifetime account model, metadata allowlist. | NFR-4, section 6 |
 | `poc-roadmap.md` | MVP capability gates and post-MVP research gates. | Technology PoC plan |
+
+Create academic learning records under `docs/learning/`:
+
+| File | Purpose |
+| --- | --- |
+| `README.md` | Explains the learning-log workflow and required fields. |
+| `skill-index.md` | Index of learned skills by topic, task, proof, and related source files. |
+| `YYYY-MM-DD-<task-slug>.md` | Per-task learning note written after the task is completed. |
 
 ## Candidate Epics
 
@@ -195,6 +207,18 @@ Expected benchmark/proof reports:
 - Google Drive E2EE ciphertext verification.
 - Browser-local AI model capability, memory, latency, and fallback matrix.
 
+Expected academic learning proof after each completed task:
+
+- A task learning note exists under `docs/learning/`.
+- The note names the practical skills used, for example PWA, responsive web app
+  for mobile browsers, SQLite WASM/OPFS, CRDT, WebCrypto, Google Drive API,
+  Go backend API design, consent-first AI, or benchmark design.
+- The note explains what was learned, what was difficult, what tradeoffs were
+  made, what commands or tests proved the work, and what future task should
+  reuse the lesson.
+- `docs/learning/skill-index.md` links the skill to the task note and affected
+  project files.
+
 ## Decisions To Record
 
 Create decision records for:
@@ -208,6 +232,36 @@ Create decision records for:
 6. Client-side encrypted Google Drive backup must keep plaintext away from the
    Go backend.
 7. Mobile, desktop, and stronger native local AI are post-MVP phases.
+8. PocketNode tasks must produce academic learning notes after completion.
+
+## Academic Learning Log Workflow
+
+Because PocketNode is an academic project, the done definition for every future
+task should include a learning note. The note should be written after
+implementation and validation, when the actual lesson is known.
+
+Each learning note should include:
+
+- Task summary.
+- Skills practiced.
+- New concepts learned.
+- Implementation details that made the skill concrete.
+- Mistakes, limitations, or tradeoffs.
+- Validation evidence.
+- Reusable guidance for future PocketNode tasks.
+
+Examples of skills to track include:
+
+- WASM and browser-native PWA architecture.
+- Responsive web app behavior for mobile browsers.
+- SQLite in the browser, including WASM, OPFS, and fallback storage.
+- CRDT and HLC merge behavior.
+- Browser peer pairing and LAN-adjacent sync constraints.
+- WebCrypto and Google Drive E2EE backup.
+- Go backend API design.
+- Consent-first AI request handling.
+- Local AI benchmarking in WebGPU/WASM environments.
+- Privacy-preserving telemetry.
 
 ## Open Risks
 
@@ -222,6 +276,7 @@ Create decision records for:
 ## Harness Delta
 
 The next planning step should create the product docs, epic/story candidate
-index, validation matrix rows, and decision records from this design. It should
-not implement application code yet unless the user explicitly selects a first
-implementation slice after reviewing the written spec.
+index, learning-log structure, validation matrix rows, and decision records
+from this design. It should not implement application code yet unless the user
+explicitly selects a first implementation slice after reviewing the written
+spec.
