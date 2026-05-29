@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PocketNode - Local-First Hub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#c0c1ff",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "inverse-on-surface": "#eaf1ff",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "surface-container-low": "#eff4ff",
+                        "on-secondary": "#ffffff",
+                        "primary-container": "#6063ee",
+                        "outline-variant": "#c7c4d7",
+                        "primary-fixed": "#e1e0ff",
+                        "on-tertiary": "#ffffff",
+                        "surface-variant": "#d3e4fe",
+                        "inverse-primary": "#c0c1ff",
+                        "background": "#f8f9ff",
+                        "on-error": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary": "#565e74",
+                        "outline": "#767586",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "tertiary": "#595c5e",
+                        "tertiary-container": "#727577",
+                        "on-surface": "#0b1c30",
+                        "surface-dim": "#cbdbf5",
+                        "error": "#ba1a1a",
+                        "surface-container-high": "#dce9ff",
+                        "error-container": "#ffdad6",
+                        "surface-container-highest": "#d3e4fe",
+                        "surface-container": "#e5eeff",
+                        "surface-bright": "#f8f9ff",
+                        "on-secondary-fixed": "#131b2e",
+                        "on-secondary-container": "#5c647a",
+                        "surface": "#f8f9ff",
+                        "on-tertiary-fixed": "#191c1e",
+                        "on-tertiary-container": "#fbfdff",
+                        "secondary-fixed-dim": "#bec6e0",
+                        "surface-tint": "#494bd6",
+                        "secondary-container": "#dae2fd",
+                        "on-secondary-fixed-variant": "#3f465c",
+                        "on-background": "#0b1c30",
+                        "on-primary-container": "#fffbff",
+                        "secondary-fixed": "#dae2fd",
+                        "tertiary-fixed": "#e0e3e5",
+                        "primary": "#4648d4",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#464554",
+                        "inverse-surface": "#213145",
+                        "on-primary-fixed": "#07006c"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "20px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "margin-mobile": "16px",
+                        "base": "4px",
+                        "xs": "4px",
+                        "xl": "32px",
+                        "md": "16px",
+                        "margin-desktop": "48px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Geist"],
+                        "body-lg": ["Geist"],
+                        "headline-lg-mobile": ["Geist"],
+                        "headline-xl": ["Geist"],
+                        "label-md": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "headline-md": ["Geist"],
+                        "label-sm": ["Geist"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "headline-xl": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-md": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "500" }],
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }]
+                    },
+                    backgroundImage: {
+                        'grid-pattern': "linear-gradient(to right, #e2e8f0 1px, transparent 1px), linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)"
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased overflow-x-hidden">
+<!-- Top Navigation (Simplified for Landing Page) -->
+<nav class="fixed top-0 w-full bg-background/80 backdrop-blur-md z-50 border-b border-outline-variant/50 h-16 flex items-center justify-between px-margin-mobile md:px-margin-desktop">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-3xl">account_balance_wallet</span>
+<span class="font-headline-md text-headline-md text-on-surface font-extrabold tracking-tight">PocketNode</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Tính năng</a>
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Bảo mật</a>
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Bảng giá</a>
+</div>
+<div>
+<a class="bg-primary hover:bg-primary/90 text-on-primary text-label-md font-label-md px-6 py-2.5 rounded-full transition-all shadow-sm" href="#">Đăng nhập</a>
+</div>
+</nav>
+<!-- Hero Section -->
+<section class="relative pt-32 pb-20 md:pt-48 md:pb-32 px-margin-mobile md:px-margin-desktop bg-grid">
+<!-- Radial gradient background for depth -->
+<div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_center,_var(--tw-gradient-stops))] from-surface-container-high/50 via-background to-background -z-10"></div>
+<div class="max-w-4xl mx-auto text-center space-y-8">
+<h1 class="font-headline-xl text-headline-xl md:text-5xl lg:text-6xl text-on-surface leading-tight">
+                Làm chủ tài chính,<br/>
+<span class="text-primary">Bảo mật tuyệt đối.</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+                Quản lý tài sản cá nhân với sức mạnh của AI, lưu trữ dữ liệu an toàn ngay trên thiết bị của bạn. Không ai có thể truy cập ngoài bạn.
+            </p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+<a class="w-full sm:w-auto bg-primary hover:bg-primary/90 text-on-primary text-label-md font-label-md px-8 py-3.5 rounded-full transition-all shadow-[0_4px_14px_0_rgba(96,99,238,0.39)] flex items-center justify-center gap-2" href="#">
+                    Bắt đầu ngay
+                    <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+<a class="w-full sm:w-auto bg-surface-container hover:bg-surface-variant text-on-surface text-label-md font-label-md px-8 py-3.5 rounded-full transition-all flex items-center justify-center" href="#">
+                    Tìm hiểu thêm
+                </a>
+</div>
+<div class="flex items-center justify-center gap-6 mt-8 text-on-surface-variant text-sm">
+<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm text-primary">check_circle</span> Không cần thẻ tín dụng</div>
+<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm text-primary">check_circle</span> Dữ liệu trên thiết bị</div>
+<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm text-primary">check_circle</span> Hủy bất kỳ lúc nào</div>
+</div>
+</div>
+<!-- Hero Mockup Area -->
+<div class="mt-20 max-w-5xl mx-auto relative">
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10 h-full w-full bottom-0"></div>
+<div class="bg-surface rounded-2xl md:rounded-[2rem] border border-outline-variant/30 shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] overflow-hidden">
+<div class="h-8 bg-surface-container-lowest border-b border-outline-variant/20 flex items-center px-4 gap-2">
+<div class="w-3 h-3 rounded-full bg-error/80"></div>
+<div class="w-3 h-3 rounded-full bg-primary/40"></div>
+<div class="w-3 h-3 rounded-full bg-primary/80"></div>
+</div>
+<div class="p-4 md:p-8 grid grid-cols-1 md:grid-cols-3 gap-6 bg-surface-bright h-[400px]">
+<!-- Abstract representation of the app -->
+<div class="col-span-1 md:col-span-2 space-y-4">
+<div class="h-32 bg-surface-container rounded-xl animate-pulse"></div>
+<div class="h-48 bg-surface-container-low rounded-xl"></div>
+</div>
+<div class="space-y-4">
+<div class="h-20 bg-primary-fixed-dim/30 rounded-xl"></div>
+<div class="h-20 bg-surface-container rounded-xl"></div>
+<div class="h-20 bg-surface-container rounded-xl"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Value Props (3-column) -->
+<section class="py-24 px-margin-mobile md:px-margin-desktop bg-surface-bright">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+<!-- Prop 1 -->
+<div class="flex flex-col items-center text-center space-y-4">
+<div class="w-16 h-16 rounded-2xl bg-surface-container flex items-center justify-center text-primary mb-2 shadow-sm">
+<span class="material-symbols-outlined text-3xl">shield_lock</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Quyền riêng tư tối thượng</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Kiến trúc Local-first đảm bảo dữ liệu tài chính của bạn không bao giờ rời khỏi thiết bị trừ khi được mã hóa đầu cuối.</p>
+</div>
+<!-- Prop 2 -->
+<div class="flex flex-col items-center text-center space-y-4">
+<div class="w-16 h-16 rounded-2xl bg-surface-container flex items-center justify-center text-primary mb-2 shadow-sm">
+<span class="material-symbols-outlined text-3xl">smart_toy</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Trợ lý AI thông minh</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Phân loại giao dịch tự động và đưa ra lời khuyên tài chính cá nhân hóa dựa trên mô hình ngôn ngữ cục bộ.</p>
+</div>
+<!-- Prop 3 -->
+<div class="flex flex-col items-center text-center space-y-4">
+<div class="w-16 h-16 rounded-2xl bg-surface-container flex items-center justify-center text-primary mb-2 shadow-sm">
+<span class="material-symbols-outlined text-3xl">sync</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface">Đồng bộ đa nền tảng</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Đồng bộ hóa liền mạch giữa các thiết bị của bạn thông qua mã hóa E2EE, không phụ thuộc vào máy chủ trung tâm.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- The Full Toolkit Section -->
+<section class="py-24 px-margin-mobile md:px-margin-desktop bg-grid">
+<div class="max-w-7xl mx-auto">
+<div class="text-center max-w-2xl mx-auto mb-16">
+<span class="inline-block py-1 px-3 rounded-full bg-surface-container text-primary text-label-sm font-label-sm mb-4 border border-primary/10">Bộ công cụ toàn diện</span>
+<h2 class="font-headline-lg text-headline-lg md:text-4xl text-on-surface mb-4">Mọi thứ bạn cần cho tài chính</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">6 tính năng cốt lõi biến PocketNode thành trung tâm quản lý tài sản duy nhất bạn cần.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Toolkit Card 1 -->
+<div class="bg-surface rounded-2xl p-8 border border-outline-variant/30 shadow-sm hover:shadow-md transition-shadow duration-300 group">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">account_balance</span>
+</div>
+<h4 class="font-headline-md text-lg font-semibold text-on-surface mb-2">Nhập liệu Ngân hàng</h4>
+<p class="font-body-md text-on-surface-variant text-sm">Kết nối an toàn và tự động tải về giao dịch từ hơn 100+ ngân hàng và ví điện tử.</p>
+</div>
+<!-- Toolkit Card 2 -->
+<div class="bg-surface rounded-2xl p-8 border border-outline-variant/30 shadow-sm hover:shadow-md transition-shadow duration-300 group">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-[#eab308] mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">bolt</span>
+</div>
+<h4 class="font-headline-md text-lg font-semibold text-on-surface mb-2">Xử lý Hàng loạt</h4>
+<p class="font-body-md text-on-surface-variant text-sm">Chỉnh sửa, gán nhãn và phân loại hàng ngàn giao dịch cùng lúc chỉ với vài thao tác.</p>
+</div>
+<!-- Toolkit Card 3 -->
+<div class="bg-surface rounded-2xl p-8 border border-outline-variant/30 shadow-sm hover:shadow-md transition-shadow duration-300 group">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-[#22c55e] mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">link</span>
+</div>
+<h4 class="font-headline-md text-lg font-semibold text-on-surface mb-2">Khớp lệnh Thông minh</h4>
+<p class="font-body-md text-on-surface-variant text-sm">AI tự động tìm và khớp hóa đơn với các giao dịch ngân hàng tương ứng với độ chính xác 95%.</p>
+</div>
+<!-- Toolkit Card 4 -->
+<div class="bg-surface rounded-2xl p-8 border border-outline-variant/30 shadow-sm hover:shadow-md transition-shadow duration-300 group">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">verified_user</span>
+</div>
+<h4 class="font-headline-md text-lg font-semibold text-on-surface mb-2">Lịch sử Kiểm toán</h4>
+<p class="font-body-md text-on-surface-variant text-sm">Mọi thay đổi đều được ghi dấu thời gian và lưu vết, đảm bảo tính minh bạch tuyệt đối.</p>
+</div>
+<!-- Toolkit Card 5 -->
+<div class="bg-surface rounded-2xl p-8 border border-outline-variant/30 shadow-sm hover:shadow-md transition-shadow duration-300 group">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-[#8b5cf6] mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">memory</span>
+</div>
+<h4 class="font-headline-md text-lg font-semibold text-on-surface mb-2">Phân loại bởi AI</h4>
+<p class="font-body-md text-on-surface-variant text-sm">Học hỏi thói quen của bạn để tự động phân bổ chi tiêu vào đúng các hạng mục ngân sách.</p>
+</div>
+<!-- Toolkit Card 6 -->
+<div class="bg-surface rounded-2xl p-8 border border-outline-variant/30 shadow-sm hover:shadow-md transition-shadow duration-300 group">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center text-[#ef4444] mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">receipt_long</span>
+</div>
+<h4 class="font-headline-md text-lg font-semibold text-on-surface mb-2">Hỗ trợ Thuế</h4>
+<p class="font-body-md text-on-surface-variant text-sm">Xuất báo cáo tài chính định dạng chuẩn, sẵn sàng cho việc kê khai thuế bất cứ lúc nào.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom CTA Section -->
+<section class="py-24 px-margin-mobile md:px-margin-desktop bg-primary text-on-primary relative overflow-hidden">
+<!-- Abstract background pattern -->
+<div class="absolute inset-0 opacity-10">
+<svg class="h-full w-full" preserveaspectratio="none" viewbox="0 0 100 100">
+<path d="M0,100 L100,0 L100,100 Z" fill="currentColor"></path>
+</svg>
+</div>
+<div class="max-w-4xl mx-auto text-center relative z-10 space-y-8">
+<h2 class="font-headline-lg text-headline-lg md:text-5xl text-on-primary">Sẵn sàng nâng tầm quản lý tài chính?</h2>
+<p class="font-body-lg text-body-lg text-on-primary/80 max-w-2xl mx-auto">
+                Tham gia cùng hàng ngàn người dùng đã chuyển sang giải pháp quản lý tài chính an toàn, riêng tư và thông minh hơn.
+            </p>
+<div class="pt-4">
+<a class="inline-flex bg-on-primary text-primary hover:bg-surface-container-lowest text-label-md font-label-md px-10 py-4 rounded-full transition-all shadow-lg items-center gap-2" href="#">
+                    Bắt đầu dùng thử miễn phí
+                    <span class="material-symbols-outlined">arrow_forward</span>
+</a>
+</div>
+<div class="flex items-center justify-center gap-6 mt-8 text-on-primary/70 text-sm">
+<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm">check</span> Tải về ngay</div>
+<div class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm">check</span> Dùng thử 14 ngày</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-surface-bright border-t border-outline-variant/30 pt-16 pb-8 px-margin-mobile md:px-margin-desktop">
+<div class="max-w-7xl mx-auto">
+<div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 mb-16">
+<!-- Brand -->
+<div class="col-span-2 lg:col-span-2">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary text-2xl">account_balance_wallet</span>
+<span class="font-headline-md text-headline-md text-on-surface font-extrabold tracking-tight">PocketNode</span>
+</div>
+<p class="font-body-sm text-sm text-on-surface-variant max-w-xs mb-6">
+                        Nền tảng tài chính cá nhân Local-First. Quyền lực của AI, sự an toàn của thiết bị cục bộ.
+                    </p>
+</div>
+<!-- Links -->
+<div>
+<h4 class="font-label-md text-label-md font-semibold text-on-surface mb-4">Sản phẩm</h4>
+<ul class="space-y-3 font-body-sm text-sm text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" href="#">Tính năng</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Bảng giá</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Cập nhật</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Tải ứng dụng</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md text-label-md font-semibold text-on-surface mb-4">Tài nguyên</h4>
+<ul class="space-y-3 font-body-sm text-sm text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" href="#">Blog</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Trung tâm trợ giúp</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Cộng đồng</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">API &amp; Docs</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-label-md text-label-md font-semibold text-on-surface mb-4">Pháp lý</h4>
+<ul class="space-y-3 font-body-sm text-sm text-on-surface-variant">
+<li><a class="hover:text-primary transition-colors" href="#">Quyền riêng tư</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Điều khoản sử dụng</a></li>
+<li><a class="hover:text-primary transition-colors" href="#">Chính sách bảo mật</a></li>
+</ul>
+</div>
+</div>
+<div class="border-t border-outline-variant/30 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="font-body-sm text-sm text-on-surface-variant">
+                    © 2024 PocketNode. All rights reserved.
+                </p>
+<div class="font-label-sm text-label-sm text-on-surface-variant/60 uppercase tracking-widest">
+                    Local-First Hub
+                </div>
+</div>
+</div>
+</footer>
+</body></html>

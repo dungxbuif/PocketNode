@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PocketNode - Wallets</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "background": "#f8fafc",
+                        "on-background": "#0f172a",
+                        "surface": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#ffffff",
+                        "surface-container": "#f1f5f9",
+                        "surface-container-high": "#e2e8f0",
+                        "surface-container-highest": "#cbd5e1",
+                        "surface-variant": "#f1f5f9",
+                        "surface-bright": "#f8fafc",
+                        "surface-dim": "#e2e8f0",
+                        "surface-tint": "#494bd6",
+                        "on-surface": "#0f172a",
+                        "on-surface-variant": "#475569",
+                        "outline": "#94a3b8",
+                        "outline-variant": "#cbd5e1",
+                        "primary": "#494bd6",
+                        "on-primary": "#ffffff",
+                        "primary-container": "#e1e0ff",
+                        "on-primary-container": "#07006c",
+                        "primary-fixed": "#e1e0ff",
+                        "primary-fixed-dim": "#c0c1ff",
+                        "on-primary-fixed": "#07006c",
+                        "on-primary-fixed-variant": "#2f2ebe",
+                        "secondary": "#006c4a",
+                        "on-secondary": "#ffffff",
+                        "secondary-container": "#6ffbbe",
+                        "on-secondary-container": "#002113",
+                        "secondary-fixed": "#6ffbbe",
+                        "secondary-fixed-dim": "#4edea3",
+                        "on-secondary-fixed": "#002113",
+                        "on-secondary-fixed-variant": "#005236",
+                        "tertiary": "#92002a",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-container": "#ffdadb",
+                        "on-tertiary-container": "#40000d",
+                        "tertiary-fixed": "#ffdadb",
+                        "tertiary-fixed-dim": "#ffb2b7",
+                        "on-tertiary-fixed": "#40000d",
+                        "on-tertiary-fixed-variant": "#67001b",
+                        "error": "#ba1a1a",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#410002",
+                        "inverse-surface": "#283044",
+                        "inverse-on-surface": "#dae2fd",
+                        "inverse-primary": "#c0c1ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "unit": "4px",
+                        "gutter": "16px",
+                        "margin-desktop": "32px",
+                        "container-max": "1200px"
+                    },
+                    "fontFamily": {
+                        "headline-lg-mobile": ["Geist"],
+                        "label-md": ["Geist"],
+                        "body-md": ["Inter"],
+                        "label-lg": ["Geist"],
+                        "headline-lg": ["Geist"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Geist"],
+                        "body-sm": ["Inter"],
+                        "mono-data": ["Geist"]
+                    },
+                    "fontSize": {
+                        "headline-lg-mobile": ["24px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "label-lg": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.05em", "fontWeight": "600" }],
+                        "headline-lg": ["32px", { "lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-md": ["24px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "body-sm": ["14px", { "lineHeight": "1.5", "fontWeight": "400" }],
+                        "mono-data": ["16px", { "lineHeight": "1.4", "letterSpacing": "-0.01em", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.background');
+            color: theme('colors.on-background');
+        }
+    </style>
+</head>
+<body class="flex">
+<!-- SideNavBar -->
+<nav class="hidden md:flex bg-surface-container h-screen w-64 fixed left-0 top-0 border-r border-outline-variant flex-col py-margin-desktop px-4 z-50">
+<div class="mb-8 px-2 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container overflow-hidden">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="A clean, minimalist headshot of a person against a neutral background, suitable for a dark-mode app profile picture. The lighting is soft and professional, emphasizing a modern, trustworthy aesthetic. The image blends seamlessly with a deep navy and indigo color palette." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNConh1u8nVXSS4YDNwiyb5CJ7fUDLascryxG-beggE878-pKfF1M7NFgWVAD1PQre9ND8qPu6ZJW721yPcORFHUbWIYkm8dERM8p06UKT5n8ClJIsHBnjNRaItYjq-J8K9tK2MBBHf9C6V0sBZ51vSIUcAHmvrV6gPcRwmV8tKclvIkn5ehBNdmiGZf1UsjOeRUoUdv4CPIxt4wS28XwUdib413s_PvQUj--Lb7hY0X_ZTF0DZEXNj0Ms2HAIHSkrQ66c40SIIJs"/>
+</div>
+<div>
+<h1 class="text-headline-md font-headline-md font-bold text-primary">PocketNode</h1>
+<p class="text-label-md font-label-md text-on-surface-variant">Local-First Hub</p>
+</div>
+</div>
+<ul class="flex flex-col gap-2 flex-grow">
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors text-label-lg font-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+                    Dashboard
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors text-label-lg font-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+                    Ledger
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors text-label-lg font-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="smart_toy">smart_toy</span>
+                    Assistant
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-primary font-bold border-r-4 border-primary bg-primary-container/30 hover:bg-primary-container/50 transition-colors text-label-lg font-label-lg scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="account_balance" style="font-variation-settings: 'FILL' 1;">account_balance</span>
+                    Wallets
+                </a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors text-label-lg font-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+                    Settings
+                </a>
+</li>
+</ul>
+<button class="w-full mt-4 bg-primary text-on-primary py-2 rounded-lg text-label-lg font-label-lg hover:opacity-90 transition-opacity mb-6 flex items-center justify-center gap-2 shadow-sm">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+            Add Transaction
+        </button>
+<div class="mt-auto pt-4 border-t border-outline-variant flex flex-col gap-2">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors text-label-lg font-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="cloud_done">cloud_done</span>
+                Sync Status
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-variant transition-colors text-label-lg font-label-lg" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+                Support
+            </a>
+</div>
+</nav>
+<!-- Main Content Wrapper -->
+<div class="flex-grow flex flex-col md:ml-64 w-full md:max-w-[calc(100%-16rem)] min-h-screen">
+<!-- TopAppBar -->
+<header class="hidden md:flex justify-between items-center w-full px-margin-desktop h-16 bg-background border-b border-outline-variant sticky top-0 z-40">
+<div class="flex items-center gap-6">
+<span class="text-headline-md font-headline-md font-extrabold text-on-surface">PocketNode</span>
+<nav class="flex gap-4">
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-md font-label-md py-4" href="#">Overview</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-md font-label-md py-4" href="#">Reports</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-md font-label-md py-4" href="#">Privacy</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="bg-surface-container border border-outline-variant rounded-full pl-9 pr-4 py-1.5 text-body-sm font-body-sm text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary w-48 transition-all" placeholder="Search..." type="text"/>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors hover:opacity-80"><span class="material-symbols-outlined" data-icon="security">security</span></button>
+<button class="text-on-surface-variant hover:text-primary transition-colors hover:opacity-80"><span class="material-symbols-outlined" data-icon="sync">sync</span></button>
+<button class="text-on-surface-variant hover:text-primary transition-colors hover:opacity-80"><span class="material-symbols-outlined" data-icon="notifications">notifications</span></button>
+</div>
+</header>
+<!-- Canvas -->
+<main class="flex-grow p-gutter md:p-margin-desktop">
+<div class="max-w-container-max mx-auto">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+<div>
+<h2 class="text-headline-lg-mobile md:text-headline-lg font-headline-lg-mobile md:font-headline-lg text-on-surface">Wallet Management</h2>
+<p class="text-body-md font-body-md text-on-surface-variant mt-1 flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-sm" data-icon="database">database</span>
+                            Browser-Local Storage (SQLite) Active
+                        </p>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 rounded-lg border border-outline-variant text-on-surface font-label-md text-label-md hover:bg-surface-variant transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="swap_horiz">swap_horiz</span>
+                            Transfer
+                        </button>
+<button class="px-4 py-2 rounded-lg bg-primary text-on-primary font-label-md text-label-md hover:opacity-90 transition-opacity flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-sm" data-icon="add_card">add_card</span>
+                            Add Wallet
+                        </button>
+</div>
+</div>
+<!-- Bento Grid for Wallets -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Wallet Card 1: VIB Bank -->
+<div class="bg-surface border border-outline-variant rounded-xl p-5 hover:border-primary transition-colors group cursor-pointer relative overflow-hidden shadow-sm hover:shadow-md">
+<div class="absolute top-0 right-0 p-3 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary" data-icon="account_balance">account_balance</span>
+</div>
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-variant flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-primary" data-icon="account_balance">account_balance</span>
+</div>
+<div>
+<h3 class="text-label-lg font-label-lg text-on-surface">VIB Bank</h3>
+<span class="text-label-md font-label-md text-on-surface-variant bg-surface-variant px-2 py-0.5 rounded text-[10px]">Checking</span>
+</div>
+</div>
+<div class="flex items-center gap-1 text-[10px] text-secondary bg-secondary/10 px-2 py-1 rounded-full border border-secondary/20">
+<span class="material-symbols-outlined text-[12px]" data-icon="lock">lock</span>
+                                E2EE Backup
+                            </div>
+</div>
+<div class="mb-4">
+<p class="text-label-md font-label-md text-on-surface-variant mb-1">Current Balance</p>
+<p class="text-headline-md font-headline-md text-on-surface font-mono-data tracking-tight">$12,450.00</p>
+</div>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/50">
+<p class="text-[11px] text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]" data-icon="sync">sync</span>
+                                Last sync: 2 mins ago
+                            </p>
+<button class="text-primary hover:text-primary/80 text-label-md font-label-md opacity-0 group-hover:opacity-100 transition-opacity">Manage</button>
+</div>
+</div>
+<!-- Wallet Card 2: Cash Wallet -->
+<div class="bg-surface border border-outline-variant rounded-xl p-5 hover:border-primary transition-colors group cursor-pointer relative overflow-hidden shadow-sm hover:shadow-md">
+<div class="absolute top-0 right-0 p-3 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-primary" data-icon="payments">payments</span>
+</div>
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-variant flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-primary" data-icon="payments">payments</span>
+</div>
+<div>
+<h3 class="text-label-lg font-label-lg text-on-surface">Cash Wallet</h3>
+<span class="text-label-md font-label-md text-on-surface-variant bg-surface-variant px-2 py-0.5 rounded text-[10px]">Physical</span>
+</div>
+</div>
+<div class="flex items-center gap-1 text-[10px] text-secondary bg-secondary/10 px-2 py-1 rounded-full border border-secondary/20">
+<span class="material-symbols-outlined text-[12px]" data-icon="lock">lock</span>
+                                E2EE Backup
+                            </div>
+</div>
+<div class="mb-4">
+<p class="text-label-md font-label-md text-on-surface-variant mb-1">Current Balance</p>
+<p class="text-headline-md font-headline-md text-on-surface font-mono-data tracking-tight">$340.50</p>
+</div>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/50">
+<p class="text-[11px] text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]" data-icon="edit_note">edit_note</span>
+                                Manual entry only
+                            </p>
+<button class="text-primary hover:text-primary/80 text-label-md font-label-md opacity-0 group-hover:opacity-100 transition-opacity">Manage</button>
+</div>
+</div>
+<!-- Wallet Card 3: Credit Card -->
+<div class="bg-surface border border-outline-variant rounded-xl p-5 hover:border-primary transition-colors group cursor-pointer relative overflow-hidden shadow-sm hover:shadow-md">
+<div class="absolute top-0 right-0 p-3 opacity-5 group-hover:opacity-10 transition-opacity">
+<span class="material-symbols-outlined text-6xl text-tertiary" data-icon="credit_card">credit_card</span>
+</div>
+<div class="flex justify-between items-start mb-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-variant flex items-center justify-center border border-outline-variant">
+<span class="material-symbols-outlined text-tertiary" data-icon="credit_card">credit_card</span>
+</div>
+<div>
+<h3 class="text-label-lg font-label-lg text-on-surface">Sapphire Reserve</h3>
+<span class="text-label-md font-label-md text-on-surface-variant bg-surface-variant px-2 py-0.5 rounded text-[10px]">Credit</span>
+</div>
+</div>
+<div class="flex items-center gap-1 text-[10px] text-secondary bg-secondary/10 px-2 py-1 rounded-full border border-secondary/20">
+<span class="material-symbols-outlined text-[12px]" data-icon="lock">lock</span>
+                                E2EE Backup
+                            </div>
+</div>
+<div class="mb-4">
+<p class="text-label-md font-label-md text-on-surface-variant mb-1">Current Balance</p>
+<p class="text-headline-md font-headline-md text-tertiary font-mono-data tracking-tight">-$1,250.00</p>
+</div>
+<div class="flex justify-between items-center pt-4 border-t border-outline-variant/50">
+<p class="text-[11px] text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]" data-icon="sync">sync</span>
+                                Last sync: 1 hr ago
+                            </p>
+<button class="text-primary hover:text-primary/80 text-label-md font-label-md opacity-0 group-hover:opacity-100 transition-opacity">Manage</button>
+</div>
+</div>
+<!-- Add New Wallet Ghost Card -->
+<div class="bg-surface-container-low border-2 border-dashed border-outline-variant rounded-xl p-5 hover:border-primary hover:bg-primary/5 transition-all cursor-pointer flex flex-col items-center justify-center min-h-[220px]">
+<div class="w-12 h-12 rounded-full bg-surface-variant flex items-center justify-center mb-4 text-on-surface-variant">
+<span class="material-symbols-outlined text-2xl" data-icon="add">add</span>
+</div>
+<h3 class="text-label-lg font-label-lg text-on-surface mb-1">Connect New Wallet</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant text-center max-w-[200px]">Link a bank account or create a manual tracker.</p>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
