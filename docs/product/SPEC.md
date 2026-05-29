@@ -22,6 +22,7 @@ MVP commitments:
 
 - Next.js/PWA web client.
 - Go backend API.
+- Google login for user accounts.
 - Browser-local ledger storage using browser-compatible SQLite.
 - Offline-capable local changes and CRDT/HLC merge behavior.
 - Browser-compatible peer pairing or LAN-adjacent sync.
@@ -87,6 +88,7 @@ Every completed task must create or update a learning note under
 | Next.js / PWA Web App | <-----> | Go Backend API            |
 |                       |         |                           |
 | - Browser SQLite      |         | - Account/API workflows   |
+| - Google login UI     |         | - Google OAuth validation |
 | - Operation log       |         | - Consent-aware AI        |
 | - CRDT/HLC merge      |         | - Telemetry allowlist     |
 | - WebCrypto E2EE      |         | - Licensing/commercial    |
@@ -269,19 +271,25 @@ plaintext backup content for this flow.
 FR-7.1 API Contracts
 The Go backend provides APIs required by the web MVP.
 
-FR-7.2 Consent-Aware AI
+FR-7.2 Google Login
+The web MVP supports login with Google. The Go backend validates Google OAuth
+identity tokens or authorization-code exchange results, creates or links the
+PocketNode account, and issues the application's own session. Login scope must
+be minimal and must be separate from Google Drive backup authorization.
+
+FR-7.3 Consent-Aware AI
 Server AI endpoints must reject sensitive AI requests unless consent is present.
 
-FR-7.3 Upload Handling
+FR-7.4 Upload Handling
 The backend enforces upload limits, content-type checks, retention rules, and
 deletion workflows.
 
-FR-7.4 Telemetry
+FR-7.5 Telemetry
 Telemetry is allowlisted and must exclude raw financial amounts, OCR text,
 receipt images, imported rows, chat prompts, generated SQL, and plaintext backup
 data.
 
-FR-7.5 Commercial Accounts
+FR-7.6 Commercial Accounts
 The backend may store account, subscription tier, public key, and last activity
 metadata for Pro/lifetime workflows.
 
@@ -306,6 +314,12 @@ NFR-5 Security
 The product should support app/session lock behavior appropriate for a web PWA.
 Secrets must not be logged or sent to telemetry.
 
+NFR-5.1 Authentication Security
+Google login must use standard OAuth/OIDC validation, protect sessions against
+CSRF and token leakage, and avoid storing Google access tokens unless a later
+story explicitly needs them. Google Drive backup authorization must be requested
+separately from login.
+
 NFR-6 Observability
 Anonymous operational telemetry and crash reporting may be used only through a
 strict metadata allowlist.
@@ -319,13 +333,16 @@ MVP validation must include:
 
 - Unit tests for money parsing, ledger rules, transfer exclusion, budgets,
   import parsing, reconciliation scoring, consent gates, telemetry filtering,
-  encryption helpers, and CRDT/HLC merge logic.
+  Google login claim/session mapping, encryption helpers, and CRDT/HLC merge
+  logic.
 - Integration tests for browser SQLite persistence, offline reload recovery,
-  Go API contracts, AI provider mocks, upload limits, retention/deletion flows,
-  Google Drive encrypted backup, and peer pairing/sync.
+  Go API contracts, Google OAuth/OIDC callback or token verification, AI
+  provider mocks, upload limits, retention/deletion flows, Google Drive
+  encrypted backup, and peer pairing/sync.
 - E2E tests for transaction CRUD, Money Lover sample import, receipt-to-draft
-  with consent, denied-consent fallback, assistant quick prompt, telemetry
-  exclusion, offline merge, and encrypted backup/restore.
+  with consent, denied-consent fallback, Google login, logout/session expiry,
+  assistant quick prompt, telemetry exclusion, offline merge, and encrypted
+  backup/restore.
 - Benchmark reports for browser SQLite read/write latency, CRDT/HLC correctness,
   peer pairing reliability, E2EE ciphertext verification, and browser-local AI
   latency/memory/capability.
@@ -337,6 +354,7 @@ MVP validation must include:
 
 - Browser-only Next.js/PWA client.
 - Go backend API.
+- Google login.
 - Ledger core.
 - Browser SQLite local storage.
 - Operation log and CRDT/HLC sync proof.
@@ -368,6 +386,8 @@ MVP validation must include:
   minimization, retention, deletion, and audit rules are enforced.
 - Google Drive OAuth and browser storage behavior may vary across browsers and
   privacy modes.
+- Google login and Google Drive backup use different Google authorization
+  scopes and must not be coupled accidentally.
 
 ## 11. Source Notes
 

@@ -37,6 +37,7 @@ Firm MVP commitments:
 
 - Browser-only web MVP.
 - Go backend API.
+- Google login for user accounts.
 - Server-side AI may be used only after explicit user consent.
 - Local ledger behavior must continue to work without AI consent.
 - Browser-native local SQLite, sync, encrypted backup, and local AI capability
@@ -77,7 +78,7 @@ Create English living product docs under `docs/product/`:
 | `assistant.md` | Ledger Assistant, quick prompts, voice/text transaction drafting, text-to-SQL constraints, chart/table outputs. | FR-3 |
 | `sync-backup.md` | Browser-local SQLite, operation log, CRDT/HLC merge, peer pairing, Google Drive E2EE backup and restore. | FR-4, NFR-3 |
 | `imports-reconciliation.md` | Vietnamese bank imports, Money Lover parser, dynamic mapper, categorization, reconciliation scoring. | FR-2.3, FR-5.1, FR-5.2 |
-| `privacy-security.md` | Consent gates, zero-knowledge boundaries where applicable, retention, deletion, app lock, secret handling. | NFR-1, AI fallback notes |
+| `privacy-security.md` | Google login, consent gates, zero-knowledge boundaries where applicable, retention, deletion, app lock, secret handling. | NFR-1, AI fallback notes |
 | `platforms.md` | MVP web/PWA surface, post-MVP mobile and desktop surfaces, browser constraints. | Container diagram, platform notes |
 | `telemetry-commercial.md` | Anonymous telemetry, crash reporting, Pro/lifetime account model, metadata allowlist. | NFR-4, section 6 |
 | `poc-roadmap.md` | MVP capability gates and post-MVP research gates. | Technology PoC plan |
@@ -104,7 +105,7 @@ Use these epics as the exhaustive backlog frame:
 | E06 Google Drive E2EE Backup | Client-side encryption, Drive upload/download, restore, ciphertext verification. | MVP |
 | E07 Privacy and Security | Consent enforcement, data minimization, retention/deletion, app lock, secrets, server boundaries. | MVP |
 | E08 Web Platform | Next.js/PWA app shell, offline capability checks, browser support messaging, responsive web UX. | MVP |
-| E09 Central Go Backend | APIs, consent-aware AI endpoints, telemetry/licensing, upload handling, retention controls. | MVP |
+| E09 Central Go Backend | Google login, APIs, consent-aware AI endpoints, telemetry/licensing, upload handling, retention controls. | MVP |
 | E10 Local AI Benchmarks | Browser-local AI benchmark harness, model/device capability checks, fallback policy. | MVP acceptance gate |
 | E11 Mobile Client | Flutter app reusing contracts, mobile capture, quick entry widgets. | Post-MVP |
 | E12 Desktop Client | Rust/Tauri client reusing contracts, stronger native local capabilities. | Post-MVP |
@@ -128,8 +129,10 @@ Each story candidate should include:
 6. Server AI is consent-first. Receipt images/text, imported statement snippets,
    chat prompts, and ledger context cannot be sent to the Go backend AI flow
    until the user opts in.
-7. AI outputs are drafts or suggestions until the user confirms them.
-8. Telemetry uses a strict allowlist and excludes raw financial amounts, OCR
+7. Google login authenticates users through standard OAuth/OIDC and is separate
+   from Google Drive authorization for encrypted backup.
+8. AI outputs are drafts or suggestions until the user confirms them.
+9. Telemetry uses a strict allowlist and excludes raw financial amounts, OCR
    text, receipt images, imported rows, chat prompts, and generated SQL.
 
 ## Error Handling
@@ -151,6 +154,8 @@ The product contract should define visible states and fallbacks for:
 - Duplicate detection uncertainty.
 - Upload limits.
 - Auth/session failure.
+- Google login callback, token validation, account linking, logout, or session
+  expiry failure.
 - Retention/deletion request.
 
 Ledger basics must remain usable without AI consent. Where a browser capability
@@ -173,6 +178,7 @@ Expected unit proof:
 - Reconciliation scoring.
 - Operation log and CRDT merge behavior.
 - Consent gate enforcement.
+- Google login claim/session mapping.
 - Telemetry allowlist filtering.
 - Encryption/decryption helpers.
 
@@ -183,6 +189,7 @@ Expected integration proof:
 - Peer pairing/sync flow under the selected browser-compatible mechanism.
 - Google Drive OAuth and encrypted backup with plaintext exclusion.
 - Go backend API contracts.
+- Google OAuth/OIDC login and session handling.
 - AI provider mocks and consent-aware request handling.
 - Upload limits and retention/deletion flows.
 
@@ -198,6 +205,7 @@ Expected E2E proof:
 - Telemetry exclusion of sensitive data.
 - Offline edits merged between two browser contexts or devices.
 - Google Drive encrypted backup and restore.
+- Google login, logout, and session expiry.
 
 Expected benchmark/proof reports:
 
@@ -225,14 +233,17 @@ Create decision records for:
 
 1. Web-only browser MVP with Next.js/PWA.
 2. Central Go backend with explicit consent for server-side AI.
-3. No local Go daemon in MVP.
-4. Browser-native local-first features are MVP requirements.
-5. LAN discovery is defined as browser-compatible peer pairing, not guaranteed
+3. Google login is part of MVP account access.
+4. Google login authorization is separate from Google Drive backup
+   authorization.
+5. No local Go daemon in MVP.
+6. Browser-native local-first features are MVP requirements.
+7. LAN discovery is defined as browser-compatible peer pairing, not guaranteed
    automatic mDNS.
-6. Client-side encrypted Google Drive backup must keep plaintext away from the
+8. Client-side encrypted Google Drive backup must keep plaintext away from the
    Go backend.
-7. Mobile, desktop, and stronger native local AI are post-MVP phases.
-8. PocketNode tasks must produce academic learning notes after completion.
+9. Mobile, desktop, and stronger native local AI are post-MVP phases.
+10. PocketNode tasks must produce academic learning notes after completion.
 
 ## Academic Learning Log Workflow
 
